@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+</head>
+
+<body>
+    <canvas id='viewport' width="500px" height="500px"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <video id="video" controls crossorigin="anonymous" preload="auto"></video>
+
+    <script>
+        var video = document.getElementById('video');
+        var videoSrc = './Downloads/842x480/video.m3u8';
+
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+
+            hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                var canvas = document.getElementById('viewport');
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+            });
+
+        }
+    </script>
+</body>
+
+</html>

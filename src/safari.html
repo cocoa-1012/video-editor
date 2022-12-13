@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+</head>
+
+<body>
+    <canvas id='viewport' width="500px" height="500px"></canvas>
+    <img id='targetImage' width="500px" height="500px" />
+    <script>
+        const image_url = '1.png';
+        fetch(image_url)
+            .then(function (response) {
+                return response.blob()
+            })
+            .then(function (blob) {
+                console.log('blob', blob);
+                blobURL = URL.createObjectURL(blob);
+                console.log();
+
+                document.getElementById('targetImage').src = blobURL;
+                // here the image is a blob
+            });
+
+        var canvas = document.getElementById('viewport'),
+            context = canvas.getContext('2d');
+
+        targetImage.onload = function () {
+            context.drawImage(targetImage, 0, 0);
+        }
+    </script>
+</body>
+
+</html>

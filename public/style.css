@@ -1,0 +1,27 @@
+body {
+    padding: 16px;
+    background-color: #2f5f83;
+    color: white;
+    font-family: Helvetica Neue, Helvetica;
+}
+#content {
+    padding: 16px;
+    border: 8px solid white;
+    background-color: #2f5f83;
+}
+h3 {
+    color: #ffaf04;
+}
+ul {
+    list-style: none;
+}
+
+li {
+    padding-left: 1em;
+    text-indent: -1em;
+}
+li:before {
+    color: #ffaf04;
+    content: "\25B6︎"; /* ▶︎ */
+    padding-right: 5px;
+}

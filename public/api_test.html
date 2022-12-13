@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="#">
+    <title>Nuro Player Controller Test</title>
+
+    <style>
+        input:disabled {
+            color: grey;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            text-align: right;
+        }
+
+        code {
+            color: #d63384;
+        }
+
+        .desc {
+            display: block;
+            color: black;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        section {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .left-container {
+            width: 50%;
+        }
+
+        .right-container {
+            width: 50%;
+        }
+
+        .left {
+            width: 30%;
+        }
+
+        .apibtn {
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 80px;
+            padding: 6px 0;
+            text-align: center;
+            text-shadow: 0 1px 0 rgb(0 0 0 / 10%);
+        }
+
+        .back-green {
+            background: #49cc90;
+        }
+
+        .legend {
+            display: flex;
+            border: 1px solid grey;
+            padding: 10px;
+            background: #e6e6e6;
+            border-radius: 4px;
+            box-shadow: 0 0 3px rgb(0 0 0 / 19%);
+            margin: 0 0 10px;
+        }
+
+        .green {
+            border-color: #49cc90;
+        }
+
+        .yellow {
+            border-color: #fca130
+        }
+
+        .blue {
+            border-color: #61affe
+        }
+
+        .blueviolet {
+            border-color: blueviolet
+        }
+
+        .red {
+            border-color: #f93e3e
+        }
+    </style>
+
+    <!-- 1. react and reactdom js files with same version as api project -->
+    <script crossorigin src="https://unpkg.com/react@18.1.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.production.min.js"></script>
+
+    <!-- 2. insert a compiled js -->
+    <script src="./nuroplayer-api.min.js"></script>
+    <script>
+        let player_state = 0;
+        // 3. declare nuroplayer
+        nuroplayer = nurolib.default;
+        nuroplayer();
+
+        function init() {
+            // 4. init player ( element, csslink )
+            nuroplayer.init(document.getElementById("content"), './nuroplayer.min.css');
+            document.getElementById('mdfile').disabled = false;
+
+            document.getElementById('md_url').disabled = false;
+            document.getElementById('setMarkdownBtn').disabled = false;
+        }
+
+        function setMarkdownSource() {
+            nuroplayer.setMarkdownSource(document.getElementById('md_url').value);
+            enabledDOMs();
+        }
+
+        function enabledDOMs() {
+            document.getElementById('playbtn').disabled = false;
+            document.getElementById('pausebtn').disabled = false;
+            document.getElementById('stopbtn').disabled = false;
+
+            document.getElementById('playBackRate').disabled = false;
+            document.getElementById('playBackRateGetBtn').disabled = false;
+            document.getElementById('playBackRateSetBtn').disabled = false;
+
+            document.getElementById('seekToTimestamp').disabled = false;
+            document.getElementById('seekToBtn').disabled = false;
+
+            document.getElementById('previousbtn').disabled = false;
+            document.getElementById('nextbtn').disabled = false;
+
+            document.getElementById('volume').disabled = false;
+            document.getElementById('volumesetbtn').disabled = false;
+            document.getElementById('volumegetbtn').disabled = false;
+            document.getElementById('mutebtn').disabled = false;
+            document.getElementById('unmutebtn').disabled = false;
+
+
+            document.getElementById('eventNumber').disabled = false;
+            document.getElementById('timestamp').disabled = false;
+            document.getElementById('mdTimeCodebtn').disabled = false;
+
+            document.getElementById('del_eventNumber').disabled = false;
+            document.getElementById('delEventNumberbtn').disabled = false;
+
+            document.getElementById('getMDbtn').disabled = false;
+            document.getElementById('getCurrentTimebtn').disabled = false;
+            document.getElementById('getPlayerStatebtn').disabled = false;
+
+            document.getElementById('playerw').disabled = false;
+            document.getElementById('playerh').disabled = false;
+            document.getElementById('setSizeBtn').disabled = false;
+
+        }
+
+        function initialize() {
+            document.getElementById('mdfile')
+                .addEventListener('change', function () {
+                    var fr = new FileReader();
+                    fr.onload = function () {
+                        nuroplayer.setMarkdownContent(fr.result);
+                    }
+                    fr.readAsText(this.files[0]);
+
+                    enabledDOMs();
+                });
+        }
+
+
+        function getMarkdownContent() {
+            let md = nuroplayer.getMarkdownContent();
+            document.getElementById('mdContent').innerHTML = md;
+            console.log('getMarkdownContent', md);
+            window.scrollTo({ top: window.outerHeight, behavior: 'smooth' })
+        }
+
+        function getCurrentTime() {
+            let current_time = nuroplayer.getCurrentTime();
+            document.getElementById('current_time').value = current_time;
+            console.log('current_time', current_time);
+        }
+        function getPlayerState() {
+            player_state = nuroplayer.getPlayerState();
+            document.getElementById('player_state').value = player_state;
+            console.log('player_state', player_state);
+        }
+
+        function setMarkdownTimecode() {
+            eventNumber = document.getElementById('eventNumber').value;
+            timestamp = document.getElementById('timestamp').value;
+            nuroplayer.setMarkdownTimecode(eventNumber, timestamp);
+        }
+
+        function deleteMarkdownTimecode() {
+            del_eventNumber = document.getElementById('del_eventNumber').value;
+            nuroplayer.deleteMarkdownTimecode(del_eventNumber);
+        }
+
+
+        function playVideo() {
+            // 6. toggle play / pause
+            nuroplayer.playVideo();
+            document.getElementById('playbtn').disabled = true;
+            document.getElementById('pausebtn').disabled = false;
+            document.getElementById('stopbtn').disabled = false;
+        }
+        function pauseVideo() {
+            // 6. toggle play / pause
+            nuroplayer.pauseVideo();
+            document.getElementById('playbtn').disabled = false;
+            document.getElementById('pausebtn').disabled = true;
+        }
+
+        function stopVideo() {
+            // 6. toggle playing
+            nuroplayer.stopVideo();
+            document.getElementById('playbtn').disabled = false;
+            document.getElementById('pausebtn').disabled = true;
+            document.getElementById('stopbtn').disabled = true;
+        }
+
+
+        function setPlaybackRate() {
+            // 7. playBackRate control
+            nuroplayer.setPlaybackRate(document.getElementById('playBackRate').value);
+        }
+        function getPlaybackRate() {
+            document.getElementById('playBackRate').value = nuroplayer.getPlaybackRate();
+        }
+
+        function seekTo() {
+            nuroplayer.seekTo(document.getElementById('seekToTimestamp').value);
+        }
+
+        function prevScene() {
+            nuroplayer.prevScene();
+        }
+        function nextScene() {
+            nuroplayer.nextScene();
+        }
+
+        function setVolume() {
+            nuroplayer.setVolume(document.getElementById('volume').value);
+        }
+        function getVolume() {
+            document.getElementById('volume').value = nuroplayer.getVolume();
+        }
+        function mute() {
+            nuroplayer.mute();
+        }
+        function unMute() {
+            nuroplayer.unMute();
+        }
+
+        function setSize() {
+            if (document.getElementById('playerw').value >= 100 && document.getElementById('playerh').value >= 100) {
+                console.log(document.getElementById('playerw').value)
+                nuroplayer.setSize(document.getElementById('playerw').value, document.getElementById('playerh').value);
+            }
+        }
+    </script>
+</head>
+
+<body onload="initialize()">
+    <section>
+        <div class="left-container">
+            <div class="legend green">
+                <div class="left">
+                </div>
+                <div class="right">
+                    <code class='desc'>
+                        1. react and reactdom js files with same version as api project
+                    </code>
+                    <code>
+                        &lt;script crossorigin src="https://unpkg.com/react@18.1.0/umd/react.production.min.js"&gt;&lt;/script&gt;<br>
+                        &lt;script crossorigin src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.production.min.js"&gt;&lt;/script&gt;
+                    </code>
+
+                    <code class='desc'>
+                        2. insert a compiled js
+                    </code>
+                    <code>
+                        &lt;script src="./nuroplayer-api.min.js"&gt;&lt;/script&gt;
+                    </code>
+
+                    <code class='desc'>
+                        3. declare nuroplayer
+                    </code>
+                    <code>
+                        nuroplayer = nurolib.default;<br>
+                        nuroplayer();
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend blue">
+                <div class="left">
+                    <button class="apibtn back-green" onclick="init()">Init</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.init(document.getElementById("content"), './nuroplayer.min.css'):Void
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend green">
+                <div class="left">
+                    <input disabled type="text" id="md_url" name="md_url" value="neurovideo.md"
+                        placeholder="markdown url" />
+                    <button disabled id="setMarkdownBtn" onclick="setMarkdownSource()">Set</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.setMarkdownSource(markdownURL):Void
+                    </code>
+                </div>
+            </div>
+            <div class="legend green">
+                <div class="left">
+                    <input disabled type="file" id="mdfile" name="mdfile" />
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.setMarkdownContent(markdownText):Void
+                    </code>
+                </div>
+            </div>
+            <div class="legend blueviolet">
+                <div class="left">
+                    <div>
+                        <button disabled id='previousbtn' onclick="prevScene()">Prev</button>
+                        <button disabled id='nextbtn' onclick="nextScene()">Next</button>
+                    </div>
+                    <div>
+                        <button disabled id='playbtn' onclick="playVideo()">Play</button>
+                        <button disabled id='pausebtn' onclick="pauseVideo()">Pause</button>
+                        <button disabled id='stopbtn' onclick="stopVideo()">Stop</button>
+                    </div>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.prevScene():Void<br>
+                        nuroplayer.playVideo():Void / nuroplayer.pauseVideo():Void / nuroplayer.stopVideo():Void<br>
+                        nuroplayer.nextScene():Void
+                    </code>
+                </div>
+
+            </div>
+
+            <div class="legend blue">
+                <div class="left">
+                    <input disabled type="number" step=0.25 min="0.25" max=4 value="1" id="playBackRate" />
+                    <button disabled id="playBackRateSetBtn" onclick="setPlaybackRate()">Set</button>
+                    <button disabled id="playBackRateGetBtn" onclick="getPlaybackRate()">Get</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.setPlaybackRate(suggestedRate:Number):Void   // 0.25 - 4 ( step: 0.25 )
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend yellow">
+                <!-- in progress, should be 00:00:31,020 format -->
+
+                <div class="left">
+                    <input disabled type="number" min="0" value="0" id="seekToTimestamp" />
+                    <button disabled id="seekToBtn" onclick="seekTo()">Go</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.seekTo(timestamp:Number):Void
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend red">
+                <div class="left">
+                    <input disabled type="number" min="0" value="30" max="100" id="volume" />
+                    <button disabled id="volumesetbtn" onclick="setVolume()">Set</button>
+                    <button disabled id="volumegetbtn" onclick="getVolume()">Get</button>
+                    <button disabled id="mutebtn" onclick="mute()">Mute</button>
+                    <button disabled id="unmutebtn" onclick="unMute()">UnMute</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.setVolume(volume:Number):Void
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend blue">
+                <div class="left">
+
+                    <input disabled type="number" min="0" value="17" id="eventNumber" placeholder="eventNumber" />
+                    <input disabled type="number" min="0" value="76.123" id="timestamp" placeholder="timestamp" />
+                    <button disabled id="mdTimeCodebtn" onclick="setMarkdownTimecode()">Set Time Code</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.setMarkdownTimecode(eventNumber:Number, timestamp:Number):Void
+                    </code>
+                </div>
+
+            </div>
+
+            <div class="legend blue">
+                <div class="left">
+                    <input disabled type="number" min="0" step=1 value="2" id="del_eventNumber"
+                        placeholder="eventNumber" />
+                    <button disabled id="delEventNumberbtn" onclick="deleteMarkdownTimecode()">Delete Event</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.deleteMarkdownTimecode(eventNumber:Number):Void
+                    </code>
+                </div>
+
+            </div>
+            <div class="legend green">
+                <button disabled id="getMDbtn" onclick="getMarkdownContent()">Get Markdown</button>
+            </div>
+
+            <div class="legend blue">
+                <div class="left">
+                    <button disabled id="getCurrentTimebtn" onclick="getCurrentTime()">Get Current Time</button>
+                    <input disabled type="number" id="current_time" />
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.getCurrentTime():Number
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend blue">
+                <div class="left">
+                    <button disabled id="getPlayerStatebtn" onclick="getPlayerState()">Get Player State</button>
+                    <input disabled type="number" id="player_state" />
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.getPlayerState():Number
+                    </code>
+                </div>
+            </div>
+
+            <div class="legend red">
+                <div class="left">
+                    <input disabled type="number" id="playerw" min=100 value=1200 />
+                    <input disabled type="number" id="playerh" min=100 value=500 />
+                    <button disabled id="setSizeBtn" onclick="setSize()">set Size</button>
+                </div>
+                <div class="right">
+                    <code>
+                        nuroplayer.setSize(width:Number, height:Number):Object
+                    </code>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+            <div id="content">
+            </div>
+            <div class="legend">
+                <textarea id="mdContent" style="width: 100%; height: 400px;"></textarea>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

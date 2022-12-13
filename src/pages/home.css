@@ -1,0 +1,87 @@
+#content {
+  position: relative;
+  height: 100%;
+}
+html,
+body,
+#root,
+.backContainer {
+  height: 100%;
+}
+
+/* .backContainer {
+  height: 70%;
+  width: 70%;
+  background: grey;
+} */
+
+body {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  line-height: 1.5;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+video {
+  display: none;
+}
+.backContainer {
+  overflow: hidden;
+  position: relative;
+}
+
+.canvas-container,
+#sCanvas,
+#animationImg,
+.animationContainer {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+}
+
+.animationContainer {
+  perspective: 1200px;
+  position: relative;
+  top: calc(50% - 28.25vw);
+}
+
+.canvas-container,
+#animationImg {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.player-control {
+  top: calc(50% + 20.75vw);
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .animationContainer {
+    top: 0;
+    left: calc(50% - 88.5vh);
+    /* width: 354vh; */
+  }
+  .player-control {
+    left: calc(50% - 88.5vh);
+    top: 87%;
+  }
+}
+
+.embeddedImg {
+  display: none;
+}

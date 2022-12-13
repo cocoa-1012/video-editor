@@ -1,0 +1,129 @@
+.player-control {
+    position: absolute;
+}
+
+#volumeDiv {
+    width: 110px;
+}
+
+.player-control .player-control {
+    &__icon,
+    &__settings {
+        font-size: 30px;
+    }
+
+    &__button {
+        color: #000;
+        padding-bottom: 0;
+        padding-top: 0;
+        min-width: 60px;
+        border: none;
+        background-color: white;
+    }
+    &__button:disabled {
+        color: grey;
+    }
+
+    &__button:hover,
+    &__button:active,
+    &__button:focus {
+        text-decoration: none;
+    }
+
+    &__speed-toggle {
+        color: #000;
+        font-family: Courier, sans-serif;
+    }
+
+    &__speed-toggle:hover,
+    &__speed-toggle:active,
+    &__speed-toggle:focus {
+        text-decoration: none;
+    }
+    &__speed-item-header {
+        text-align: center;
+        width: 50px;
+    }
+    &__speed-item {
+        display: inline-block;
+        text-align: left;
+        color: #000;
+        padding-left: 30px;
+        width: 150px;
+    }
+    &__speed-item-right {
+        display: inline-block;
+        text-align: right;
+        color: #000;
+        width: 150px;
+    }
+
+    &__speed-item-checker {
+        display: inline-block;
+        position: absolute;
+        height: 26px;
+    }
+
+    &__speed-item:hover {
+        cursor: pointer;
+    }
+
+    &__speed-item:active {
+        background: #f8f9fa;
+    }
+
+    &__speed-item:focus {
+        outline: none;
+    }
+
+    &__time {
+        font-family: Courier, sans-serif;
+        color: #000;
+        font-weight: bold;
+    }
+}
+
+.visually-hidden, .visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute!important;
+    width: 1px!important;
+    height: 1px!important;
+    padding: 0!important;
+    margin: -1px!important;
+    overflow: hidden!important;
+    clip: rect(0,0,0,0)!important;
+    white-space: nowrap!important;
+    border: 0!important;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.dropdown-menu.show {
+    display: block;
+}
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
